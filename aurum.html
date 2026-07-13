@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Oficiální stránky luxusní švýcarské hodinářské manufaktury AURUM. Objevte kolekci přesných časomír a mistrovské řemeslo s tradicí od roku 1924.">
+    <title>AURUM — Genève 1924</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --c-bg: #060606;
+            --c-ivory: #f4f2ed;
+            --c-gold: #b08d57;
+            --c-gray: #6f6f6a;
+            --f-serif: 'Cormorant Garamond', serif;
+            --f-sans: 'Jost', sans-serif;
+            --f-mono: monospace;
+            --ease: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 16px; scroll-behavior: initial; }
+        body {
+            background-color: var(--c-bg);
+            color: var(--c-ivory);
+            font-family: var(--f-sans);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            cursor: none;
+        }
+        
+        /* Cursor */
+        @media (pointer: fine) {
+            .cursor-cross {
+                position: fixed; top: 0; left: 0;
+                width: 24px; height: 24px;
+                pointer-events: none; z-index: 9999;
+                transform: translate(-50%, -50%);
+                mix-blend-mode: difference;
+                transition: transform 0.2s var(--ease);
+                will-change: transform;
+            }
+            .cursor-cross::before, .cursor-cross::after {
+                content: ''; position: absolute; background: var(--c-ivory);
+            }
+            .cursor-cross::before { width: 1px; height: 100%; left: 11.5px; top: 0; }
+            .cursor-cross::after { width: 100%; height: 1px; top: 11.5px; left: 0; }
+            .cursor-dot {
+                position: fixed; top: 0; left: 0; width: 4px; height: 4px;
+                background: var(--c-gold); border-radius: 50%;
+                pointer-events: none; z-index: 10000;
+                transform: translate(-50%, -50%);
+                will-change: transform;
+            }
+            .is-hover .cursor-cross { transform: translate(-50%, -50%) rotate(45deg) scale(1.5); }
+        }
+        @media (pointer: coarse), (hover: none) {
+            body { cursor: auto; }
+            .cursor-cross, .cursor-dot { display: none; }
+        }
+
+        /* Typography & Utils */
+        h1, h2, h3, h4, h5 { font-family: var(--f-serif); font-weight: 300; line-height: 1.1; }
+        .text-gold { color: var(--c-gold); }
+        .text-mono { font-family: var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; }
+        
+        /* Nav */
+        .nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            height: 64px; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(6, 6, 6, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(244, 242, 237, 0.08);
+        }
+        .nav__logo {
+            font-family: var(--f-serif); font-size: 1.5rem; letter-spacing: 0.25em; text-transform: uppercase;
+            text-decoration: none; color: var(--c-ivory);
+        }
+        .nav__links { display: flex; gap: 40px; }
+        .nav__link {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em;
+            text-decoration: none; color: var(--c-ivory); transition: color 0.3s;
+        }
+        .nav__link:hover { color: var(--c-gold); }
+        .nav__cta { color: var(--c-gold); }
+        .hamburger { display: none; background: none; border: none; color: var(--c-ivory); cursor: pointer; padding: 8px; font-family: var(--f-sans); font-size: 0.8rem; letter-spacing: 0.15em; }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed; inset: 0; background: var(--c-bg); z-index: 99;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease);
+        }
+        .mobile-menu.is-open { opacity: 1; pointer-events: auto; }
+        .mobile-menu__link {
+            font-family: var(--f-serif); font-size: 3rem; color: var(--c-ivory);
+            text-decoration: none; margin: 16px 0; opacity: 0; transform: translateY(20px);
+        }
+        
+        /* Hero */
+        .hero { position: relative; height: 100vh; width: 100%; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .hero__video-wrap { position: absolute; inset: 0; z-index: 0; }
+        .hero__video { width: 100%; height: 100%; object-fit: cover; }
+        .hero__overlay { position: absolute; inset: 0; background: rgba(6, 6, 6, 0.35); z-index: 1; }
+        
+        .hero__content { position: relative; z-index: 2; text-align: center; width: 100%; }
+        .hero__eyebrow { margin-bottom: 24px; color: var(--c-ivory); opacity: 0.8; }
+        .hero__title {
+            font-size: clamp(4rem, 15vw, 12rem); letter-spacing: 0.15em;
+            text-transform: uppercase; line-height: 1; margin: 0;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+        .hero__title span { display: inline-block; transform: translateY(110%); }
+        
+        .hero__bottom {
+            position: absolute; bottom: 40px; right: 40px; z-index: 2;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .hero__bottom-text { font-size: 0.85rem; color: var(--c-ivory); text-align: right; max-width: 200px; line-height: 1.4; }
+        .hero__scroll-line { width: 64px; height: 1px; background: var(--c-gold); transform-origin: left; }
+        
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; width: 100%; height: 1px;
+            background: var(--c-gold); z-index: 101; transform-origin: left; transform: scaleX(0);
+        }
+
+        /* Collection */
+        .collection { padding: 160px 40px; border-bottom: 1px solid rgba(244, 242, 237, 0.08); }
+        .model { display: flex; align-items: center; justify-content: space-between; margin-bottom: 120px; gap: 80px; }
+        .model:nth-child(even) { flex-direction: row-reverse; }
+        .model:last-child { margin-bottom: 0; }
+        
+        .model__img-wrap {
+            flex: 1; position: relative; aspect-ratio: 4/5; max-width: 600px;
+            background: #0a0a0a; overflow: hidden;
+            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+        }
+        .model__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+        
+        .model__svg-border { position: absolute; inset: 16px; width: calc(100% - 32px); height: calc(100% - 32px); pointer-events: none; z-index: 2; }
+        .model__svg-rect { fill: none; stroke: var(--c-gold); stroke-width: 1px; stroke-dasharray: 4000; stroke-dashoffset: 4000; transition: stroke-dashoffset 0.8s var(--ease); }
+        
+        @media (hover: hover) and (pointer: fine) {
+            .model__img-wrap:hover .model__svg-rect { stroke-dashoffset: 0; }
+            .model__img-wrap:hover .model__img { transform: scale(1.02); }
+        }
+        
+        .model__content { flex: 1; max-width: 480px; }
+        .model__num { color: var(--c-gold); margin-bottom: 32px; display: block; }
+        .model__title { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 16px; letter-spacing: 0.02em; }
+        .model__price { font-size: 1.25rem; color: var(--c-gray); margin-bottom: 48px; }
+        
+        .model__specs { border-top: 1px solid rgba(244, 242, 237, 0.08); }
+        .spec { display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid rgba(244, 242, 237, 0.08); overflow: hidden; }
+        .spec span { transform: translateY(100%); opacity: 0; }
+        .spec-label { color: var(--c-gray); }
+
+        /* Craft (Sticky Split) */
+        .craft { display: flex; border-bottom: 1px solid rgba(244, 242, 237, 0.08); }
+        .craft__left { flex: 1; position: relative; border-right: 1px solid rgba(244, 242, 237, 0.08); height: 100vh; overflow: hidden; }
+        .craft__right { flex: 1; }
+        
+        .craft__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        .craft__img-2, .craft__img-3 { clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%); }
+        
+        .craft__index { position: absolute; bottom: 40px; left: 40px; z-index: 10; font-size: 2rem; font-family: var(--f-serif); color: var(--c-ivory); line-height: 1; }
+        
+        .craft__block { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 80px; }
+        .craft__block h3 { font-size: 3rem; margin-bottom: 24px; color: var(--c-gold); }
+        .craft__block p { font-size: 1.1rem; color: var(--c-gray); max-width: 400px; }
+
+        /* Manufacture Numbers */
+        .numbers { padding: 160px 40px; text-align: center; border-bottom: 1px solid rgba(244, 242, 237, 0.08); }
+        .numbers__top-line { width: 100%; height: 1px; background: var(--c-gold); transform: scaleX(0); transform-origin: left; margin-bottom: 80px; }
+        .numbers__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+        .number-box { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .number-val { font-family: var(--f-serif); font-size: clamp(3rem, 6vw, 5rem); color: var(--c-ivory); font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .number-label { color: var(--c-gray); }
+
+        /* Timeline */
+        .timeline-sec { padding: 160px 0; border-bottom: 1px solid rgba(244, 242, 237, 0.08); overflow: hidden; }
+        .timeline__header { padding: 0 40px; margin-bottom: 80px; }
+        .timeline__header h2 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        .timeline-container { position: relative; padding-left: 40px; width: fit-content; display: flex; gap: 200px; padding-right: 80px; }
+        
+        .timeline__track { position: absolute; top: 30px; left: 40px; right: 0; height: 1px; background: rgba(244, 242, 237, 0.1); z-index: 0; }
+        .timeline__progress { position: absolute; top: 30px; left: 40px; width: 0; height: 1px; background: var(--c-gold); z-index: 1; }
+        
+        .milestone { position: relative; z-index: 2; width: 280px; padding-top: 60px; }
+        .milestone::before { content: ''; position: absolute; top: 26px; left: 0; width: 1px; height: 9px; background: var(--c-ivory); }
+        .milestone__year { font-family: var(--f-serif); font-size: 3.5rem; color: var(--c-gold); margin-bottom: 16px; line-height: 1; }
+        .milestone__text { color: var(--c-gray); font-size: 0.95rem; }
+
+        /* Contact & Footer */
+        .bottom-section { display: flex; border-bottom: 1px solid rgba(244, 242, 237, 0.08); }
+        .boutiques { flex: 1; padding: 120px 40px; border-right: 1px solid rgba(244, 242, 237, 0.08); }
+        .contact-form { flex: 1; padding: 120px 40px; }
+        
+        .boutique-city { font-family: var(--f-serif); font-size: 2rem; margin-bottom: 8px; color: var(--c-ivory); }
+        .boutique-info { color: var(--c-gray); margin-bottom: 40px; line-height: 1.8; }
+        
+        .form-group { position: relative; margin-bottom: 48px; }
+        .form-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(244,242,237,0.2); padding: 16px 0; color: var(--c-ivory); font-family: var(--f-sans); font-size: 1rem; outline: none; transition: border-color 0.3s; }
+        .form-input:focus { border-bottom-color: var(--c-gold); }
+        .form-label { position: absolute; top: 16px; left: 0; color: var(--c-gray); pointer-events: none; transition: 0.3s var(--ease); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .form-input:focus ~ .form-label, .form-input:valid ~ .form-label { transform: translateY(-24px); font-size: 0.7rem; color: var(--c-gold); }
+        
+        .submit-btn {
+            background: transparent; border: 1px solid var(--c-gold); color: var(--c-gold);
+            padding: 16px 40px; font-family: var(--f-sans); font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 0.15em; cursor: pointer; border-radius: 2px; transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .submit-btn:hover { background: var(--c-gold); color: var(--c-bg); }
+
+        .footer { padding: 80px 40px 40px; text-align: center; }
+        .footer__logo { font-family: var(--f-serif); font-size: clamp(4rem, 15vw, 12rem); line-height: 0.8; margin-bottom: 60px; letter-spacing: 0.05em; color: var(--c-ivory); }
+        .footer__bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(244, 242, 237, 0.08); padding-top: 24px; }
+        .footer__copy { color: var(--c-gray); font-size: 0.85rem; }
+        .footer__link { color: var(--c-gold); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.3s; }
+        .footer__link:hover { color: var(--c-ivory); }
+
+        /* Responsive */
+        @media (max-width: 1080px) {
+            .nav__links { display: none; }
+            .hamburger { display: block; }
+            .craft { flex-direction: column; }
+            .craft__left { height: 60vh; border-right: none; border-bottom: 1px solid rgba(244,242,237,0.08); }
+            .craft__block { height: auto; padding: 80px 40px; }
+            .bottom-section { flex-direction: column; }
+            .boutiques { border-right: none; border-bottom: 1px solid rgba(244,242,237,0.08); }
+        }
+        @media (max-width: 768px) {
+            .nav { padding: 0 24px; }
+            .hero__bottom { bottom: 24px; right: 24px; left: 24px; justify-content: space-between; }
+            .hero__bottom-text { text-align: left; }
+            .hero__scroll-line { display: none; }
+            .collection { padding: 80px 24px; }
+            .model { flex-direction: column !important; gap: 40px; margin-bottom: 100px; }
+            .model__img-wrap { width: 100%; max-width: 100%; aspect-ratio: 1; }
+            .model__content { max-width: 100%; }
+            .craft__block { padding: 60px 24px; }
+            .numbers { padding: 80px 24px; }
+            .numbers__grid { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
+            .timeline-sec { padding: 80px 0; }
+            .timeline__header { padding: 0 24px; margin-bottom: 40px; }
+            .timeline-container { gap: 80px; padding-left: 24px; }
+            .timeline__track, .timeline__progress { left: 24px; }
+            .boutiques { padding: 80px 24px; }
+            .contact-form { padding: 80px 24px; }
+            .footer { padding: 60px 24px 30px; }
+            .footer__bottom { flex-direction: column; gap: 16px; }
+        }
+        
+        .reveal-line { overflow: hidden; }
+        .reveal-line span { display: inline-block; transform: translateY(110%); opacity: 0; }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-line span { transform: none !important; opacity: 1 !important; }
+            .model__img-wrap, .craft__img { clip-path: none !important; }
+            .hero__title span { transform: none !important; }
+            .scroll-progress { display: none; }
+        }
+    </style>
+</head>
+<body class="hover-targets">
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="cursor-cross" id="cursorCross" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+    <nav class="nav">
+        <a href="#" class="nav__logo" data-hover>AURUM</a>
+        <div class="nav__links">
+            <a href="#kolekce" class="nav__link" data-hover>Kolekce</a>
+            <a href="#remeslo" class="nav__link" data-hover>Řemeslo</a>
+            <a href="#manufaktura" class="nav__link" data-hover>Manufaktura</a>
+            <a href="#kontakt" class="nav__link nav__cta" data-hover>Konzultace</a>
+        </div>
+        <button class="hamburger" id="hamburger" data-hover>MENU</button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#kolekce" class="mobile-menu__link">Kolekce</a>
+        <a href="#remeslo" class="mobile-menu__link">Řemeslo</a>
+        <a href="#manufaktura" class="mobile-menu__link">Manufaktura</a>
+        <a href="#kontakt" class="mobile-menu__link text-gold">Konzultace</a>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="hero__video-wrap">
+            <video class="hero__video" autoplay muted loop playsinline poster="aurum-model-1.png" id="heroVideo">
+                <source src="aurum-hero-clean.mp4" type="video/mp4">
+            </video>
+            <div class="hero__overlay"></div>
+        </div>
+        <div class="hero__content">
+            <div class="text-mono hero__eyebrow">Manufaktura od roku 1924</div>
+            <h1 class="hero__title" id="heroTitle">
+                <span>A</span><span>U</span><span>R</span><span>U</span><span>M</span>
+            </h1>
+        </div>
+        <div class="hero__bottom">
+            <div class="hero__scroll-line" id="heroLine"></div>
+            <div class="hero__bottom-text text-mono">Trvalá hodnota, měřená s absolutní přesností.</div>
+        </div>
+    </section>
+
+    <section class="collection" id="kolekce">
+        <!-- Model 1 -->
+        <div class="model">
+            <div class="model__img-wrap" data-hover>
+                <svg class="model__svg-border"><rect class="model__svg-rect" width="100%" height="100%" /></svg>
+                <img src="aurum-model-1.png" alt="Meridian 40" class="model__img">
+            </div>
+            <div class="model__content">
+                <span class="text-mono model__num">01</span>
+                <h2 class="model__title reveal-line"><span>Meridian 40</span></h2>
+                <div class="model__price reveal-line"><span>285 000 Kč</span></div>
+                <div class="model__specs">
+                    <div class="spec"><span class="spec-label">Průměr</span><span class="spec-val">40.0 mm</span></div>
+                    <div class="spec"><span class="spec-label">Hnutí</span><span class="spec-val">Calibre AU-19</span></div>
+                    <div class="spec"><span class="spec-label">Rezerva chodu</span><span class="spec-val">72 hodin</span></div>
+                </div>
+            </div>
+        </div>
+        <!-- Model 2 -->
+        <div class="model">
+            <div class="model__img-wrap" data-hover>
+                <svg class="model__svg-border"><rect class="model__svg-rect" width="100%" height="100%" /></svg>
+                <img src="aurum-model-2.png" alt="Calibre Or" class="model__img">
+            </div>
+            <div class="model__content">
+                <span class="text-mono model__num">02</span>
+                <h2 class="model__title reveal-line"><span>Calibre Or</span></h2>
+                <div class="model__price reveal-line"><span>512 000 Kč</span></div>
+                <div class="model__specs">
+                    <div class="spec"><span class="spec-label">Průměr</span><span class="spec-val">38.5 mm</span></div>
+                    <div class="spec"><span class="spec-label">Hnutí</span><span class="spec-val">Calibre AU-21 Manual</span></div>
+                    <div class="spec"><span class="spec-label">Rezerva chodu</span><span class="spec-val">120 hodin</span></div>
+                </div>
+            </div>
+        </div>
+        <!-- Model 3 -->
+        <div class="model">
+            <div class="model__img-wrap" data-hover>
+                <svg class="model__svg-border"><rect class="model__svg-rect" width="100%" height="100%" /></svg>
+                <img src="aurum-model-3.png" alt="Chrono Titan" class="model__img">
+            </div>
+            <div class="model__content">
+                <span class="text-mono model__num">03</span>
+                <h2 class="model__title reveal-line"><span>Chrono Titan</span></h2>
+                <div class="model__price reveal-line"><span>398 000 Kč</span></div>
+                <div class="model__specs">
+                    <div class="spec"><span class="spec-label">Průměr</span><span class="spec-val">42.0 mm</span></div>
+                    <div class="spec"><span class="spec-label">Hnutí</span><span class="spec-val">Calibre AU-Chrono</span></div>
+                    <div class="spec"><span class="spec-label">Rezerva chodu</span><span class="spec-val">65 hodin</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="craft" id="remeslo">
+        <div class="craft__left" id="craftLeft">
+            <div class="craft__index" id="craftIndex">I</div>
+            <img src="aurum-detail-1.png" alt="Číselník" class="craft__img craft__img-1" id="cImg1">
+            <img src="aurum-detail-2.png" alt="Strojek" class="craft__img craft__img-2" id="cImg2">
+            <img src="aurum-detail-3.png" alt="Korunka" class="craft__img craft__img-3" id="cImg3">
+        </div>
+        <div class="craft__right" id="craftRight">
+            <div class="craft__block">
+                <h3>Číselník</h3>
+                <p>Dokonalost začíná pod safírovým sklem. Ciferníky jsou ručně gilošované metodami předávanými po generace. Aplikované zlaté indexy zachycují světlo pod přesným úhlem.</p>
+            </div>
+            <div class="craft__block">
+                <h3>Strojek</h3>
+                <p>Srdce každých hodinek AURUM bije v dokonalé symetrii. Skrze prosklené dýnko můžete obdivovat ručně sražené hrany, ženevské pruhy a perlage. Stovky součástek v harmonii.</p>
+            </div>
+            <div class="craft__block">
+                <h3>Korunka</h3>
+                <p>Nástroj pro spojení člověka s mechanismem. Precizně drážkovaná, osazená drobným onyxem. Každé natažení strojek oživí hmatatelným důkazem kvality.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="numbers" id="manufaktura">
+        <div class="numbers__top-line" id="numLine"></div>
+        <div class="numbers__grid">
+            <div class="number-box">
+                <div class="number-val" data-target="102">0</div>
+                <div class="text-mono number-label">Let tradice</div>
+            </div>
+            <div class="number-box">
+                <div class="number-val" data-target="38">0</div>
+                <div class="text-mono number-label">Mistrů hodinářů</div>
+            </div>
+            <div class="number-box">
+                <div class="number-val" data-target="214">0</div>
+                <div class="text-mono number-label">Komponentů</div>
+            </div>
+            <div class="number-box">
+                <div class="number-val" data-target="5">0</div>
+                <div class="text-mono number-label">Let záruka</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-sec">
+        <div class="timeline__header">
+            <h2 class="reveal-line"><span>Heritage</span></h2>
+        </div>
+        <div style="overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none;" class="timeline-wrapper" data-hover>
+            <div class="timeline-container" id="timelineContainer">
+                <div class="timeline__track"></div>
+                <div class="timeline__progress" id="timelineProgress"></div>
+                
+                <div class="milestone">
+                    <div class="milestone__year">1924</div>
+                    <div class="milestone__text">Založení manufaktury v Ženevě a představení prvního přesného kapesního chronometru s unikátním kotvovým krokem.</div>
+                </div>
+                <div class="milestone">
+                    <div class="milestone__year">1956</div>
+                    <div class="milestone__text">Revoluční vodotěsné pouzdro "Oyster Shield" nastavilo nový průmyslový standard odolnosti.</div>
+                </div>
+                <div class="milestone">
+                    <div class="milestone__year">1989</div>
+                    <div class="milestone__text">Uvedení kolekce Calibre Or, ztělesnění minimalistické elegance pro moderní dobu.</div>
+                </div>
+                <div class="milestone">
+                    <div class="milestone__year">2026</div>
+                    <div class="milestone__text">Inovace materiálu s modelem Chrono Titan. Přesnost a nadčasovost přetrvává dalších sto let.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bottom-section" id="kontakt">
+        <div class="boutiques">
+            <div style="margin-bottom: 64px;">
+                <h3 class="boutique-city">Ženeva</h3>
+                <div class="text-mono boutique-info">Rue du Rhône 42<br>Pondělí — Sobota: 10:00 - 18:30</div>
+            </div>
+            <div style="margin-bottom: 64px;">
+                <h3 class="boutique-city">Praha</h3>
+                <div class="text-mono boutique-info">Pařížská 18<br>Pondělí — Sobota: 10:00 - 19:00</div>
+            </div>
+            <div>
+                <h3 class="boutique-city">Dubaj</h3>
+                <div class="text-mono boutique-info">Dubai Mall, Fashion Avenue<br>Denně: 10:00 - 23:00</div>
+            </div>
+        </div>
+        <div class="contact-form">
+            <h2 style="font-size: 2.5rem; margin-bottom: 40px; font-family: var(--f-serif); color: var(--c-ivory);">Objednat soukromou konzultaci</h2>
+            <form onsubmit="event.preventDefault(); this.querySelector('.submit-btn').innerHTML = 'Odesláno'; this.querySelector('.submit-btn').style.background = '#b08d57'; this.querySelector('.submit-btn').style.color = '#060606';">
+                <div class="form-group">
+                    <input type="text" class="form-input" required id="fName">
+                    <label for="fName" class="form-label">Jméno a příjmení</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" required id="fEmail">
+                    <label for="fEmail" class="form-label">E-mailová adresa</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" required id="fModel">
+                    <label for="fModel" class="form-label">Vybraný model</label>
+                </div>
+                <button type="submit" class="submit-btn" data-hover>Rezervovat termín</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2 class="footer__logo">AURUM</h2>
+        <div class="footer__bottom">
+            <span class="text-mono footer__copy">© 2026 Aurum — koncept vytvořil vaswebhned</span>
+            <a href="index.html" class="text-mono footer__link" data-hover>← Portfolio</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+            gsap.registerPlugin(ScrollTrigger);
+
+            var isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            // Lenis smooth scroll
+            var lenis = null;
+            if (typeof Lenis !== "undefined" && !isReduced) {
+                lenis = new Lenis({ duration: 1.2, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+                
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+                gsap.ticker.lagSmoothing(0, 0);
+            }
+
+            // Custom Cursor
+            var cross = document.getElementById("cursorCross");
+            var dot = document.getElementById("cursorDot");
+            var hoverTargets = document.querySelectorAll("[data-hover], a, button, .model__img-wrap");
+            
+            if (window.matchMedia("(pointer: fine)").matches && !isReduced) {
+                document.addEventListener("mousemove", function(e) {
+                    if (cross) { cross.style.transform = "translate(" + e.clientX + "px," + e.clientY + "px) translate(-50%,-50%)"; }
+                    if (dot) { dot.style.transform = "translate(" + e.clientX + "px," + e.clientY + "px) translate(-50%,-50%)"; }
+                });
+                hoverTargets.forEach(function(el) {
+                    el.addEventListener("mouseenter", function() { document.body.classList.add("is-hover"); });
+                    el.addEventListener("mouseleave", function() { document.body.classList.remove("is-hover"); });
+                });
+            }
+
+            // Mobile menu
+            var btn = document.getElementById("hamburger");
+            var menu = document.getElementById("mobileMenu");
+            var links = menu.querySelectorAll(".mobile-menu__link");
+            var menuOpen = false;
+            
+            btn.addEventListener("click", function() {
+                menuOpen = !menuOpen;
+                if(menuOpen) {
+                    menu.classList.add("is-open");
+                    btn.textContent = "ZAVŘÍT";
+                    gsap.to(links, { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out", delay: 0.2 });
+                } else {
+                    menu.classList.remove("is-open");
+                    btn.textContent = "MENU";
+                    gsap.to(links, { y: 20, opacity: 0, duration: 0.3 });
+                }
+            });
+            menu.addEventListener("click", function() { if(menuOpen) btn.click(); });
+
+            if (isReduced) return;
+
+            // Scroll Progress Line
+            gsap.to("#scrollProgress", {
+                scaleX: 1, ease: "none",
+                scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
+            });
+
+            // Hero Animations
+            var heroChars = document.querySelectorAll(".hero__title span");
+            gsap.to(heroChars, { y: 0, duration: 1.2, stagger: 0.1, ease: "power4.out", delay: 0.5 });
+            
+            gsap.to(".hero__video", {
+                scale: 1.06, ease: "none",
+                scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+            });
+            gsap.to(".hero__content, .hero__bottom", {
+                y: -100, opacity: 0, ease: "none",
+                scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+            });
+
+            // Text Reveals
+            var revealLines = document.querySelectorAll(".reveal-line span");
+            revealLines.forEach(function(span) {
+                gsap.to(span, {
+                    y: 0, opacity: 1, duration: 1, ease: "power4.out",
+                    scrollTrigger: { trigger: span.parentElement, start: "top 90%" }
+                });
+            });
+
+            // Specs Stagger Reveal
+            document.querySelectorAll(".model__specs").forEach(function(specs) {
+                var specItems = specs.querySelectorAll(".spec span");
+                gsap.to(specItems, {
+                    y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out",
+                    scrollTrigger: { trigger: specs, start: "top 90%" }
+                });
+            });
+            
+            // Image Wipe Reveal
+            document.querySelectorAll(".model__img-wrap").forEach(function(wrap) {
+                gsap.to(wrap, {
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                    duration: 1.5, ease: "power4.inOut",
+                    scrollTrigger: { trigger: wrap, start: "top 85%" }
+                });
+            });
+
+            // Sticky Craft Section (Desktop only)
+            ScrollTrigger.matchMedia({
+                "(min-width: 1081px)": function() {
+                    var craftBlocks = document.querySelectorAll(".craft__block");
+                    var craftIndex = document.getElementById("craftIndex");
+                    
+                    ScrollTrigger.create({
+                        trigger: "#remeslo",
+                        start: "top top", end: "bottom bottom", pin: "#craftLeft"
+                    });
+
+                    // Image 2 wipe
+                    gsap.to("#cImg2", {
+                        clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)", ease: "none",
+                        scrollTrigger: { trigger: craftBlocks[1], start: "top 80%", end: "top 20%", scrub: true }
+                    });
+                    // Image 3 wipe
+                    gsap.to("#cImg3", {
+                        clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)", ease: "none",
+                        scrollTrigger: { trigger: craftBlocks[2], start: "top 80%", end: "top 20%", scrub: true }
+                    });
+
+                    craftBlocks.forEach(function(block, i) {
+                        ScrollTrigger.create({
+                            trigger: block, start: "top 50%", end: "bottom 50%",
+                            onEnter: function() { craftIndex.textContent = i === 0 ? "I" : i === 1 ? "II" : "III"; },
+                            onEnterBack: function() { craftIndex.textContent = i === 0 ? "I" : i === 1 ? "II" : "III"; }
+                        });
+                    });
+                }
+            });
+
+            // Number Counters
+            gsap.to("#numLine", {
+                scaleX: 1, duration: 1.5, ease: "power3.inOut",
+                scrollTrigger: { trigger: "#manufaktura", start: "top 75%" }
+            });
+            
+            document.querySelectorAll(".number-val").forEach(function(el) {
+                var target = parseInt(el.getAttribute("data-target"));
+                var obj = { val: 0 };
+                gsap.to(obj, {
+                    val: target, duration: 2, ease: "power2.out",
+                    onUpdate: function() { el.textContent = Math.round(obj.val).toLocaleString("cs-CZ"); },
+                    scrollTrigger: { trigger: el, start: "top 85%" }
+                });
+            });
+
+            // Timeline Horizontal Progress
+            gsap.to("#timelineProgress", {
+                width: "100%", ease: "none",
+                scrollTrigger: { trigger: ".timeline-sec", start: "top 80%", end: "bottom 50%", scrub: true }
+            });
+        });
+    </script>
+</body>
+</html>

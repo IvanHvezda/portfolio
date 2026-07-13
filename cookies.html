@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zásady používání cookies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background 0.3s;
+            margin-bottom: 1.5rem;
+            font-size: 16px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .back-button:hover {
+            background: #2980b9;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin: 1.5rem 0 0.8rem 0;
+            font-size: 1.4rem;
+            word-wrap: break-word;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin: 1.2rem 0 0.6rem 0;
+            font-size: 1.2rem;
+            word-wrap: break-word;
+        }
+        
+        h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            word-wrap: break-word;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        
+        ul {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+        
+        .section {
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .cookie-type {
+            background: #e8f4fd;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        /* Responzivní tabulka */
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 300px;
+        }
+        
+        .cookie-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .cookie-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .cookie-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .cookie-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #ecf0f1;
+        }
+        
+        /* Mobile first - velmi malé obrazovky */
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+                line-height: 1.5;
+            }
+            
+            .container {
+                padding: 10px;
+                margin: 5px;
+                box-shadow: none;
+            }
+            
+            .header {
+                padding: 1rem 0;
+                margin: -10px -10px 1rem -10px;
+                border-radius: 0;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+                margin: 1.2rem 0 0.6rem 0;
+            }
+            
+            h3 {
+                font-size: 1.1rem;
+            }
+            
+            h4 {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .cookie-type {
+                padding: 0.8rem;
+                margin: 0.8rem 0;
+            }
+            
+            .back-button {
+                padding: 10px 15px;
+                font-size: 15px;
+                margin-bottom: 1rem;
+            }
+            
+            .cookie-table th,
+            .cookie-table td {
+                padding: 6px 4px;
+                font-size: 13px;
+            }
+            
+            ul {
+                padding-left: 1.2rem;
+            }
+            
+            .table-container {
+                margin: 0.8rem 0;
+                border-radius: 4px;
+            }
+        }
+        
+        /* Střední obrazovky */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .cookie-table th,
+            .cookie-table td {
+                padding: 8px 6px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Velké obrazovky */
+        @media (min-width: 769px) {
+            .container {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Zajištění čitelnosti na velmi malých zařízeních */
+        @media (max-width: 360px) {
+            body {
+                font-size: 14px;
+            }
+            
+            .container {
+                padding: 8px;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            h3 {
+                font-size: 1.1rem;
+            }
+            
+            h4 {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 0.8rem;
+            }
+            
+            .cookie-type {
+                padding: 0.7rem;
+            }
+            
+            .cookie-table {
+                font-size: 12px;
+            }
+            
+            .cookie-table th,
+            .cookie-table td {
+                padding: 5px 3px;
+                font-size: 12px;
+            }
+        }
+        
+        /* Zvýraznění důležitých částí */
+        strong {
+            color: #2c3e50;
+        }
+        
+        /* Zlepšení čitelnosti dlouhých slov */
+        .break-word {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Ikony pro cookie typy */
+        .cookie-icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Zásady používání cookies</h1>
+            <p>Cookie Policy</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Zpět na hlavní stránku</a>
+
+        <div class="section">
+            <h2>Co jsou cookies?</h2>
+            <p>Cookies jsou malé textové soubory, které navštívené webové stránky ukládají do vašeho zařízení (počítače, tabletu, chytrého telefonu). Umožňují webovým stránkám zapamatovat si informace o vaší návštěvě, což může usnadnit další návštěvu a stránky učinit užitečnějšími.</p>
+        </div>
+
+        <div class="section">
+            <h2>Druhy cookies, které používáme</h2>
+            
+            <div class="cookie-type">
+                <h4><span class="cookie-icon">🍪</span> Nezbytné cookies</h4>
+                <p>Tyto cookies jsou nezbytné pro základní funkce webových stránek a nelze je vypnout. Obvykle se nastavují v reakci na vaše akce, jako je přihlášení k účtu nebo vyplnění formulářů. Můžete si nastavit prohlížeč tak, aby blokoval tyto cookies, ale některé části webu pak nemusí fungovat správně.</p>
+            </div>
+            
+            <div class="cookie-type">
+                <h4><span class="cookie-icon">⚙️</span> Preferenční cookies</h4>
+                <p>Umožňují webovým stránkám zapamatovat si volby, které jste provedli (jako je vaše uživatelské jméno, jazyk nebo oblast, ve které se nacházíte), a poskytnout vylepšené, osobnější funkce.</p>
+            </div>
+            
+            <div class="cookie-type">
+                <h4><span class="cookie-icon">📊</span> Statistické cookies</h4>
+                <p>Tyto cookies nám umožňují počítat návštěvy a zdroje traffic, abychom mohli měřit a zlepšovat výkon našich stránek. Pomáhají nám zjistit, které stránky jsou nejvíce a nejméně navštěvované a jak se návštěvníci po stránkách pohybují.</p>
+            </div>
+            
+            <div class="cookie-type">
+                <h4><span class="cookie-icon">🎯</span> Marketingové cookies</h4>
+                <p>Tyto cookies jsou nastaveny prostřednictvím našich stránek našimi reklamními partnery. Používají se k vytváření profilu zájmů a zobrazování relevantních reklam na jiných stránkách. Neukládají přímo osobní údaje, ale jsou založeny na jednoznačné identifikaci prohlížeče a internetového zařízení.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Konkrétní cookies používané na našem webu</h2>
+            
+            <h3>Nezbytné cookies:</h3>
+            <div class="table-container">
+                <table class="cookie-table">
+                    <tr>
+                        <th>Název</th>
+                        <th>Platnost</th>
+                        <th>Účel</th>
+                    </tr>
+                    <tr>
+                        <td>session_id</td>
+                        <td>do konce relace</td>
+                        <td>udržení uživatelské relace</td>
+                    </tr>
+                    <tr>
+                        <td>cookie_consent</td>
+                        <td>1 rok</td>
+                        <td>uložení souhlasu s cookies</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>Statistické cookies:</h3>
+            <div class="table-container">
+                <table class="cookie-table">
+                    <tr>
+                        <th>Název</th>
+                        <th>Platnost</th>
+                        <th>Účel</th>
+                    </tr>
+                    <tr>
+                        <td>_ga</td>
+                        <td>2 roky</td>
+                        <td>Google Analytics - rozlišení uživatelů</td>
+                    </tr>
+                    <tr>
+                        <td>_gid</td>
+                        <td>24 hodin</td>
+                        <td>Google Analytics - rozlišení uživatelů</td>
+                    </tr>
+                    <tr>
+                        <td>_gat</td>
+                        <td>1 minuta</td>
+                        <td>Google Analytics - omezení počtu požadavků</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h3>Marketingové cookies:</h3>
+            <div class="table-container">
+                <table class="cookie-table">
+                    <tr>
+                        <th>Název</th>
+                        <th>Platnost</th>
+                        <th>Účel</th>
+                    </tr>
+                    <tr>
+                        <td>NID</td>
+                        <td>6 měsíců</td>
+                        <td>Google Maps - ukládání preferencí</td>
+                    </tr>
+                    <tr>
+                        <td>CONSENT</td>
+                        <td>1 roky</td>
+                        <td>Google - souhlas s cookies</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Správa cookies</h2>
+            <p>Svůj souhlas s používáním cookies můžete kdykoli změnit prostřednictvím nastavení cookies, které najdete v pravém dolním rohu webové stránky. Také můžete cookies odmítnout nebo blokovat pomocí nastavení vašeho internetového prohlížeče.</p>
+        </div>
+
+        <div class="section">
+            <h2>Jak cookies vypnout v prohlížeči</h2>
+            <p>Většina prohlížečů automaticky přijímá cookies. Můžete však upravit nastavení prohlížeče tak, aby cookies odmítal, nebo vás upozornil pokaždé, když webová stránka chce cookies uložit. Podrobné informace naleznete v nápovědě vašeho prohlížeče.</p>
+        </div>
+
+        <div class="section">
+            <h2>Změny v zásadách cookies</h2>
+            <p>Tyto zásady používání cookies mohou být čas od času aktualizovány. Doporučujeme vám pravidelně kontrolovat tuto stránku, abyste byli informováni o jakýchkoli změnách.</p>
+        </div>
+
+        <div class="footer">
+            <p>Poslední aktualizace: [datum] | [Název společnosti]</p>
+        </div>
+    </div>
+</body>
+</html>
